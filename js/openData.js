@@ -10,7 +10,7 @@ function initMap(){
        title: 'Bogotá D.C.'
      });
      var geocoder = new google.maps.Geocoder();
-    function centrosC(){
+    function centrosCo(){
        for (var local in centrosC){
            var marker = new google.maps.Marker({
            position: centrosC[local].center,
@@ -21,6 +21,34 @@ function initMap(){
        }
      }
 
+  function museosyteatros() {
+    for (var local in museos) {
+      // Add the circle for this city to the map.
+      var cityCircle = new google.maps.Circle({
+        strokeColor: 'blue',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: 'blue',
+        fillOpacity: 0.35,
+        map: map,
+        center: museos [local].center,
+        radius: 150
+      });
+    }
+            for (var local in teatros) {
+      // Add the circle for this city to the map.
+      var cityCircle = new google.maps.Circle({
+        strokeColor: 'green',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: 'green',
+        fillOpacity: 0.35,
+        map: map,
+        center: teatros[local].center,
+        radius: 150
+      });
+    }
+  }
   function hotelesydemas(){
     for (var local in bogotaRest) {
            // Add the circle for this city to the map.
@@ -61,7 +89,6 @@ function initMap(){
        }
     function planDescanso(){
       initMap();
-      var lines = [];
        //Localidad donde se realizará la sugerencia
            var maxPopulation = [bogotaHotel.suba.population,Object ];
            for(var i in bogotaHotel){
@@ -78,6 +105,7 @@ function initMap(){
            });
 
            function processData(allText) {
+             var lines = [];
              var allTextLines = allText.split(/\r\n|\n/);
              var headers = allTextLines[0].split(',');
              for (var i=1; i<allTextLines.length; i++) {
@@ -91,20 +119,21 @@ function initMap(){
              }
             }
             console.log(lines);
-            address = lines[0][4].split(":")[1];
+            address = lines[4][4].split(":")[1];
             console.log(address);
-            for( var i in lines){
-              if(lines[i][5].split(":")[1] == maxPopulation[1].toUpperCase())
-                console.log(lines[i][4].split(":")[1]);
-           }
+          //   for( var i in lines){
+          //     if(lines[i][5].split(":")[1] == maxPopulation[1].toUpperCase())
+          //       console.log(lines[i][4].split(":")[1]);
+          //  }
            ///
-          geocodeAddress(geocoder, map);
+           geocodeAddress(geocoder, map)
          }
       }
       function geocodeAddress(geocoder, resultsMap) {
        geocoder.geocode({'address': address}, function(results, status) {
          if (status === 'OK') {
            resultsMap.setCenter(results[0].geometry.location);
+           console.log(results[0].geometry.location);
            var marker = new google.maps.Marker({
              map: resultsMap,
              position: results[0].geometry.location
@@ -116,7 +145,7 @@ function initMap(){
      }
 
         initMap.planDescanso = planDescanso;
-        initMap.centrosC = centrosC;
+        initMap.centrosCo = centrosCo;
         initMap.hotelesydemas = hotelesydemas;
       }
 
@@ -218,3 +247,45 @@ function initMap(){
              center: {lat: 4.666186, lng: -74.055584}
            }
          };
+
+         var museos = {
+         oro : {
+           center: {lat: 4.601743, lng: -74.072024}
+         },
+         botero : {
+           center: {lat: 4.596738, lng: -74.073162}
+         },
+         mambo : {
+           center: {lat: 4.609995, lng: -74.069362}
+         },
+         casaDeLaM :{
+           center: {lat: 4.597010, lng: -74.073586}
+         },
+         policia :{
+           center: {lat: 4.597577, lng: -74.078456}
+         },
+         historiaNatural :{
+           center: {lat: 4.642149, lng: -74.081736}
+         }
+       };
+
+         var teatros = {
+         colon : {
+           center: {lat: 4.666587, lng: -74.053143}
+         },
+         colsubsidio : {
+           center: {lat: 4.647559, lng: -74.101886}
+         },
+         libelulaD : {
+           center: {lat: 4.694847, lng: -74.086435}
+         },
+         leonardus :{
+           center: {lat: 4.618609, lng: -74.086183}
+         },
+         julioM :{
+           center: {lat: 4.762410, lng: -74.046599}
+         },
+         villaM :{
+           center: {lat: 4.666186, lng: -74.055584}
+         }
+       };

@@ -3,6 +3,38 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  padding: 0; 
+}
+
+
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+.search-button{
+  margin-top: 
+}
+#map{
+		position: absolute;
+	  height: 100vh;
+	  width: 75vw;
+	  padding: 0px;
+	  display: block;
+}
+#sidebar{
+  	position: absolute;
+	  height: 100vh;
+	  width: 25vw;
+	  padding: 0px;
+	  display: block;
+	  background-color: #F05F40;
+    margin-left: 75%;
+}
 html,
 body {
   height: 100%;
