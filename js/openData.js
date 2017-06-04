@@ -1,3 +1,4 @@
+var address;
 function initMap(){
      var mapDiv = document.getElementById('map');
      var map = new google.maps.Map(mapDiv, {
@@ -8,19 +9,20 @@ function initMap(){
        map: map,
        title: 'Bogotá D.C.'
      });
+     var geocoder = new google.maps.Geocoder();
     function centrosC(){
        for (var local in centrosC){
            var marker = new google.maps.Marker({
            position: centrosC[local].center,
            map: map,
-           title: local
+           title: "local"
            //icon: shop
          });
        }
      }
 
   function hotelesydemas(){
-             for (var local in bogotaRest) {
+    for (var local in bogotaRest) {
            // Add the circle for this city to the map.
            var cityCircle = new google.maps.Circle({
              strokeColor: 'orange',
@@ -58,6 +60,9 @@ function initMap(){
          }
        }
     function planDescanso(){
+      initMap();
+      var lines = [];
+       //Localidad donde se realizará la sugerencia
            var maxPopulation = [bogotaHotel.suba.population,Object ];
            for(var i in bogotaHotel){
              if( bogotaHotel[i].population > maxPopulation[0]){
@@ -75,7 +80,6 @@ function initMap(){
            function processData(allText) {
              var allTextLines = allText.split(/\r\n|\n/);
              var headers = allTextLines[0].split(',');
-             var lines = [];
              for (var i=1; i<allTextLines.length; i++) {
              var data = allTextLines[i].split(',');
              if (data.length == headers.length) {
@@ -85,16 +89,32 @@ function initMap(){
              }
              lines.push(tarr);
              }
+            }
+            console.log(lines);
+            address = lines[0][4].split(":")[1];
+            console.log(address);
+            for( var i in lines){
+              if(lines[i][5].split(":")[1] == maxPopulation[1].toUpperCase())
+                console.log(lines[i][4].split(":")[1]);
            }
-               console.log(lines);
-             for( var i in lines){
-               if(lines[i][5].split(":")[1] == maxPopulation[1].toUpperCase())
-                 console.log(lines[i][4].split(":")[1]);
-           }
-             // alert(lines);
+           ///
+          geocodeAddress(geocoder, map);
          }
-           //Localidad donde se realizará la sugerencia
+      }
+      function geocodeAddress(geocoder, resultsMap) {
+       geocoder.geocode({'address': address}, function(results, status) {
+         if (status === 'OK') {
+           resultsMap.setCenter(results[0].geometry.location);
+           var marker = new google.maps.Marker({
+             map: resultsMap,
+             position: results[0].geometry.location
+           });
+         } else {
+           alert('Geocode was not successful for the following reason: ' + status);
          }
+       });
+     }
+
         initMap.planDescanso = planDescanso;
         initMap.centrosC = centrosC;
         initMap.hotelesydemas = hotelesydemas;
