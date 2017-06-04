@@ -8,7 +8,7 @@ function initMap(){
        map: map,
        title: 'Bogotá D.C.'
      });
-    // function centrosC(){
+    function centrosC(){
        for (var local in centrosC){
            var marker = new google.maps.Marker({
            position: centrosC[local].center,
@@ -16,10 +16,10 @@ function initMap(){
            title: local
            //icon: shop
          });
-
+       }
      }
 
-
+  function hotelesydemas(){
              for (var local in bogotaRest) {
            // Add the circle for this city to the map.
            var cityCircle = new google.maps.Circle({
@@ -56,9 +56,8 @@ function initMap(){
          });
 
          }
-
-
-         function planDescanso(){
+       }
+    function planDescanso(){
            var maxPopulation = [bogotaHotel.suba.population,Object ];
            for(var i in bogotaHotel){
              if( bogotaHotel[i].population > maxPopulation[0]){
@@ -97,7 +96,8 @@ function initMap(){
            //Localidad donde se realizará la sugerencia
          }
         initMap.planDescanso = planDescanso;
-
+        initMap.centrosC = centrosC;
+        initMap.hotelesydemas = hotelesydemas;
       }
 
         var bogotaRest = {
